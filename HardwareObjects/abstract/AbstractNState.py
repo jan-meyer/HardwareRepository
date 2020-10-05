@@ -90,3 +90,13 @@ class AbstractNState(AbstractActuator):
                 return enum_var
 
         return self.VALUES.UNKNOWN
+
+    def re_emit_values(self):
+        """Update values for all internal attributes"""
+        self.update_value(self.get_value())
+
+        # NB DO NOT 'FIX', this is deliberate.
+        # One would normally call super(AbstractNState ...), however we want to call
+        # re_emit_values of HardwareObject to avoid the limit handling implemented in
+        # AbstractActuator
+        super(AbstractActuator, self).re_emit_values()
